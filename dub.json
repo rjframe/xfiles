@@ -1,0 +1,27 @@
+{
+	"name": "msoffice",
+	"authors": [
+		"Ryan Frame"
+	],
+	"description": "Microsoft Office document reader/writer.",
+	"copyright": "Copyright © 2018 Ryan Frame",
+	"license": "MIT",
+    "configurations": [
+        {
+            "name": "library",
+            "targetType": "library"
+        },
+        {
+            "name": "unittest",
+            "targetType": "executable",
+            "preBuildCommands": [ "dub run unit-threaded -c gen_ut_main -- -f bin/ut.d" ],
+            "mainSourceFile": "bin/ut.d",
+            "sourcePaths": [ "test" ],
+            "importPaths": [ "source", "test" ],
+            "excludedSourceFiles": [ "source/app.d" ],
+            "dependencies": {
+                "unit-threaded": "~>0.7.46"
+            }
+        }
+    ]
+}
