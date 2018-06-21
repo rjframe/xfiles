@@ -120,6 +120,17 @@ struct Attribute {
 */
 struct TagName {
     string name;
+
+    static string get(alias type)() {
+        import std.traits : hasUDA, getUDAs;
+        string name;
+        static if (hasUDA!(type, TagName)) {
+            name = getUDAs!(type, TagName)[0].name;
+        } else {
+            name = type.stringof;
+        }
+        return name;
+    }
 }
 
 // TODO: Refactor this function.
@@ -127,17 +138,9 @@ string toXML(T)(T tag) {
     import std.traits;
     import msoffice.trace;
 
-    string tagName = "";
     string xml = "<";
 
-    // Set the root tag name.
-    static if (hasUDA!(T, TagName)) {
-        xml ~= getUDAs!(T, TagName)[0].name;
-        tagName = getUDAs!(T, TagName)[0].name;
-    } else {
-        xml ~= T.stringof;
-        tagName = T.stringof;
-    }
+    xml ~= TagName.get!T();
 
     // Set root tag attributes.
     static foreach(attr; getUDAs!(T, Attribute)) {
@@ -161,12 +164,7 @@ string toXML(T)(T tag) {
 
                 // Opening tag.
                 xml ~= "<";
-                mixin(
-                `static if (hasUDA!(tag.` ~ fieldNames[i] ~ `, TagName)) {` ~
-                    `xml ~= getUDAs!(tag.` ~ fieldNames[i] ~ `, TagName)[0].name;` ~
-                `} else {` ~
-                    `xml ~= fieldNames[i];` ~
-                `}`);
+                mixin("xml ~= TagName.get!(tag." ~ fieldNames[i] ~ ")();");
 
                 // Set element attributes.
                 mixin(
@@ -193,7 +191,7 @@ string toXML(T)(T tag) {
         }
     }
 
-    xml ~= "</" ~ tagName ~ ">\n";
+    xml ~= "</" ~ TagName.get!T() ~ ">\n";
 
     return xml;
 }
