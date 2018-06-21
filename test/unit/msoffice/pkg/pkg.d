@@ -11,7 +11,7 @@ unittest {
     }
     Values obj = { a: "asdf", b: 15 };
 
-    assert(obj.toXML() == "<Values><a>asdf</a><b>15</b></Values>\n", obj.toXML());
+    assert(obj.toXML() == "<Values><a>asdf</a><b>15</b></Values>", obj.toXML());
 }
 
 @("toXML serializes with attributes")
@@ -25,7 +25,7 @@ unittest {
     Attrs obj = { a: "asdf", b: 15 };
 
     assert(obj.toXML() ==
-            `<Attrs myAttr="my value"><a>asdf</a><b intAttr="int value">15</b></Attrs>` ~ "\n",
+            `<Attrs myAttr="my value"><a>asdf</a><b intAttr="int value">15</b></Attrs>` ~ "",
             obj.toXML());
 }
 
@@ -38,7 +38,7 @@ unittest {
     }
     Elems obj = { a: "asdf", b: 15 };
 
-    assert(obj.toXML() == "<Elems><MyTagA>asdf</MyTagA><b>15</b></Elems>\n",
+    assert(obj.toXML() == "<Elems><MyTagA>asdf</MyTagA><b>15</b></Elems>",
             obj.toXML());
 }
 
@@ -57,8 +57,7 @@ unittest {
 
     Aggregate obj = { b: 10, c: Internal(5) };
 
-    trace(obj.toXML());
-    assert(obj.toXML() == "<Aggregate><b>10</b><c><a>5</a></c></Aggregate>\n",
+    assert(obj.toXML() == "<Aggregate><b>10</b><c><a>5</a></c></Aggregate>",
             obj.toXML());
 }
 
@@ -72,8 +71,7 @@ unittest {
 
     Array obj = { a: 1, b: "two", c: [3, 4, 5] };
 
-    trace(obj.toXML());
     assert(obj.toXML() ==
-            "<Array><a>1</a><b>two</b><c>3</c><c>4</c><c>5</c></Array>\n",
+            "<Array><a>1</a><b>two</b><c>3</c><c>4</c><c>5</c></Array>",
             obj.toXML());
 }
