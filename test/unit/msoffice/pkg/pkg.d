@@ -3,6 +3,9 @@ module unit.msoffice.pkg.pkg;
 import msoffice.trace;
 import msoffice.pkg.pkg;
 
+enum xmlDecl = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`;
+
+
 @("toXML serializes with values")
 unittest {
     struct Values {
@@ -11,34 +14,36 @@ unittest {
     }
     Values obj = { a: "asdf", b: 15 };
 
-    assert(obj.toXML() == "<Values><a>asdf</a><b>15</b></Values>", obj.toXML());
+    assert(obj.toXML() ==
+            xmlDecl ~ "<Values><a>asdf</a><b>15</b></Values>", obj.toXML());
 }
 
 @("toXML serializes with attributes")
 unittest {
-    @Attribute("myAttr", "my value")
+    @XMLAttribute("myAttr", "my value")
     struct Attrs {
         string a;
-        @Attribute("intAttr", "int value")
+        @XMLAttribute("intAttr", "int value")
         int b;
     }
     Attrs obj = { a: "asdf", b: 15 };
 
     assert(obj.toXML() ==
-            `<Attrs myAttr="my value"><a>asdf</a><b intAttr="int value">15</b></Attrs>` ~ "",
+            xmlDecl ~ `<Attrs myAttr="my value"><a>asdf</a><b intAttr="int value">15</b></Attrs>` ~ "",
             obj.toXML());
 }
 
 @("toXML serializes with alternative element names")
 unittest {
     struct Elems {
-        @TagName("MyTagA")
+        @XMLElementName("MyTagA")
         string a;
         int b;
     }
     Elems obj = { a: "asdf", b: 15 };
 
-    assert(obj.toXML() == "<Elems><MyTagA>asdf</MyTagA><b>15</b></Elems>",
+    assert(obj.toXML() ==
+            xmlDecl ~ "<Elems><MyTagA>asdf</MyTagA><b>15</b></Elems>",
             obj.toXML());
 }
 
@@ -57,7 +62,8 @@ unittest {
 
     Aggregate obj = { b: 10, c: Internal(5) };
 
-    assert(obj.toXML() == "<Aggregate><b>10</b><c><a>5</a></c></Aggregate>",
+    assert(obj.toXML() ==
+            xmlDecl ~ "<Aggregate><b>10</b><c><a>5</a></c></Aggregate>",
             obj.toXML());
 }
 
@@ -72,6 +78,6 @@ unittest {
     Array obj = { a: 1, b: "two", c: [3, 4, 5] };
 
     assert(obj.toXML() ==
-            "<Array><a>1</a><b>two</b><c>3</c><c>4</c><c>5</c></Array>",
+            xmlDecl ~ "<Array><a>1</a><b>two</b><c>3</c><c>4</c><c>5</c></Array>",
             obj.toXML());
 }
