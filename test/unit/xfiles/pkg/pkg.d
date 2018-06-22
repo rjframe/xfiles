@@ -1,7 +1,7 @@
-module unit.msoffice.pkg.pkg;
+module unit.xfiles.pkg.pkg;
 
-import msoffice.trace;
-import msoffice.pkg.pkg;
+import xfiles.trace;
+import xfiles.pkg.pkg;
 
 enum xmlDecl = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>`;
 

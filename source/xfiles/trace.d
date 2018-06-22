@@ -1,4 +1,4 @@
-module msoffice.trace;
+module xfiles.trace;
 
 void trace(T...)(T args, string func = __FUNCTION__) {
     import std.stdio : writeln;

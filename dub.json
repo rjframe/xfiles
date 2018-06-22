@@ -1,9 +1,9 @@
 {
-	"name": "msoffice",
+	"name": "xfiles",
 	"authors": [
 		"Ryan Frame"
 	],
-	"description": "Microsoft Office document reader/writer.",
+	"description": "Microsoft Office® document reader/writer.",
 	"copyright": "Copyright © 2018 Ryan Frame",
 	"license": "MIT",
     "configurations": [

@@ -1,4 +1,4 @@
-module msoffice.pkg.pkg;
+module xfiles.pkg.pkg;
 
 struct Package {
     Part[] parts;
